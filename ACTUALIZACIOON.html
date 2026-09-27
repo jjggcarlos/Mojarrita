@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Página en actualización</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden}
+body{
+    background:
+      radial-gradient(circle at 50% 45%, #17171d 0%, #09090d 48%, #020204 100%);
+    font-family: "Segoe UI", sans-serif;
+    color:white;
+    position:relative;
+}
+
+/* brillo ambiental */
+body::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+      radial-gradient(circle at 50% 50%, rgba(255,255,255,.07), transparent 35%),
+      linear-gradient(transparent 70%, rgba(255,255,255,.025));
+    pointer-events:none;
+}
+
+.contenido{
+    position:absolute;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    z-index:10;
+}
+
+.caja{
+    padding:35px 45px;
+    animation: aparecer 2s ease;
+}
+
+h1{
+    font-size:clamp(32px, 5vw, 68px);
+    font-weight:300;
+    letter-spacing:5px;
+    text-shadow:0 0 20px rgba(255,255,255,.5);
+}
+
+.sub{
+    margin-top:18px;
+    font-size:14px;
+    letter-spacing:7px;
+    opacity:.55;
+}
+
+.decoracion{
+    margin:25px auto 0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:18px;
+}
+
+.linea{
+    width:90px;
+    height:1px;
+    background:rgba(255,255,255,.65);
+}
+
+.corazon-centro{
+    font-size:28px;
+    animation: latido 1.8s infinite;
+    text-shadow:0 0 18px white;
+}
+
+/* corazones que caen */
+.corazones{
+    position:absolute;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+}
+
+.corazon{
+    position:absolute;
+    top:-80px;
+    color:white;
+    font-size:var(--size);
+    opacity:var(--opacity);
+    filter:drop-shadow(0 0 8px rgba(255,255,255,.8));
+    animation: caer var(--duracion) linear infinite;
+    animation-delay:var(--delay);
+    left:var(--left);
+}
+
+@keyframes caer{
+    0%{
+        transform:translateY(-100px) rotate(0deg);
+        opacity:0;
+    }
+    10%{opacity:var(--opacity)}
+    90%{opacity:var(--opacity)}
+    100%{
+        transform:translateY(110vh) rotate(360deg);
+        opacity:0;
+    }
+}
+
+@keyframes latido{
+    0%,100%{transform:scale(1)}
+    50%{transform:scale(1.18)}
+}
+
+@keyframes aparecer{
+    from{opacity:0;transform:translateY(20px)}
+    to{opacity:1;transform:translateY(0)}
+}
+</style>
+</head>
+
+<body>
+
+<div class="corazones" id="corazones"></div>
+
+<div class="contenido">
+    <div class="caja">
+        <h1>PÁGINA EN<br>ACTUALIZACIÓN...</h1>
+        <div class="sub">VUELVE PRONTO</div>
+
+        <div class="decoracion">
+            <div class="linea"></div>
+            <div class="corazon-centro">♡</div>
+            <div class="linea"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+const contenedor = document.getElementById("corazones");
+
+for(let i = 0; i < 55; i++){
+    const corazon = document.createElement("div");
+    corazon.className = "corazon";
+    corazon.innerHTML = Math.random() > 0.35 ? "♥" : "♡";
+
+    corazon.style.setProperty("--left", Math.random()*100 + "%");
+    corazon.style.setProperty("--size", (10 + Math.random()*25) + "px");
+    corazon.style.setProperty("--opacity", (0.25 + Math.random()*0.7).toFixed(2));
+    corazon.style.setProperty("--duracion", (5 + Math.random()*9) + "s");
+    corazon.style.setProperty("--delay", (-Math.random()*12) + "s");
+
+    contenedor.appendChild(corazon);
+}
+</script>
+
+</body>
+</html>
