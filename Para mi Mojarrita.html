@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Para mi Mojarrita</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Lora:wght@400;500&family=Josefin+Sans:wght@200;300&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0a0c; --card:#161418; --line:#4a4030; --gold:#f3d58a; --cream:#efe6d2; --muted:#b9ad95; --rose:#e0707f;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:radial-gradient(ellipse at top,#17131a,var(--bg) 60%);color:var(--cream);font-family:'Lora',Georgia,serif;min-height:100vh}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 5vw;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-family:'Cormorant Garamond',Georgia,serif;font-size:18px;line-height:1.1;color:var(--cream)}
+.brand svg{width:34px;height:34px;stroke:var(--cream);fill:none;stroke-width:1.6}
+nav{display:flex;gap:8px}
+nav button{background:none;border:0;border-bottom:2px solid transparent;color:var(--muted);font:600 26px 'Cormorant Garamond',Georgia,serif;padding:10px 22px;cursor:pointer}
+nav button[aria-selected=true]{color:var(--cream);border-color:var(--gold)}
+.pill{width:42px;height:42px;border-radius:50%;background:var(--gold);display:grid;place-items:center}
+.pill svg{width:18px;height:18px;stroke:#3a2d10;fill:none;stroke-width:2}
+main{max-width:1100px;margin:0 auto;padding:30px 5vw 80px}
+h1{font:italic 400 30px 'Cormorant Garamond',Georgia,serif;color:var(--gold);text-align:center;margin:20px 0 30px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:20px}
+.song{display:flex;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;position:relative;text-decoration:none;color:inherit}
+.cover{width:64px;height:64px;border-radius:8px;flex:none;background:linear-gradient(135deg,#7a2d3b,#e0707f);display:grid;place-items:center;overflow:hidden}
+.cover img{width:100%;height:100%;object-fit:cover}
+.cover svg{width:28px;height:28px;fill:#fff3;}
+.info{min-width:0;flex:1}
+.t{font:600 19px 'Cormorant Garamond',Georgia,serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.a{font-size:13px;color:var(--cream)}.d{font-size:12px;color:var(--muted)}
+.heart,.del{border:0;border-radius:50%;width:34px;height:34px;background:#2a2620;color:var(--gold);cursor:pointer;display:grid;place-items:center;flex:none}
+.heart svg{width:16px;height:16px;stroke:var(--gold);fill:none;stroke-width:2}
+.heart.on svg{fill:var(--rose);stroke:var(--rose)}
+.del{position:absolute;top:-8px;right:-8px;width:24px;height:24px;font-size:14px;background:#3a2530;display:none}
+body.edit .del{display:grid}
+.actions{display:flex;flex-direction:column;align-items:center;gap:14px;margin-top:44px}
+.btn{font:600 18px 'Cormorant Garamond',Georgia,serif;border-radius:999px;padding:12px 28px;cursor:pointer;border:1px solid var(--gold);text-decoration:none;display:inline-flex;align-items:center;gap:10px}
+.btn.main{background:var(--gold);color:#2b2008}
+.btn.ghost{background:none;color:var(--gold)}
+.btn svg{width:20px;height:20px;fill:currentColor}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.panel{display:none;width:100%;max-width:520px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin-top:6px}
+.panel.open{display:block}
+.panel h2{font:600 22px 'Cormorant Garamond',Georgia,serif;margin:0 0 12px;color:var(--gold)}
+label{display:block;font-size:13px;color:var(--muted);margin:10px 0 4px}
+input,textarea{resize:vertical;width:100%;background:#0f0d11;border:1px solid var(--line);border-radius:8px;color:var(--cream);padding:10px;font:inherit}
+.row{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.empty,.flowers{text-align:center;color:var(--muted);padding:40px 0;font-style:italic}
+.flowers .big{font-size:56px;font-style:normal}
+[hidden]{display:none!important}
+header,main{position:relative;z-index:1}
+.rain{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.rain span{position:absolute;top:0;color:#fff;text-shadow:0 0 8px #fff8;animation:fall linear infinite,sway ease-in-out infinite alternate}
+@keyframes fall{from{translate:0 -10vh}to{translate:0 110vh}}
+@keyframes sway{from{transform:translateX(-12px) rotate(-15deg)}to{transform:translateX(12px) rotate(15deg)}}
+@media(prefers-reduced-motion:reduce){.rain span{animation:none;top:calc(var(--y,50)*1%)}}
+.soon{min-height:55vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.soon h2{font:200 clamp(32px,6vw,64px)/1.25 'Josefin Sans',sans-serif;letter-spacing:.04em;text-transform:uppercase;margin:0;color:#fff;text-shadow:0 0 24px #fff5}
+.soon p{font:300 14px 'Josefin Sans',sans-serif;letter-spacing:.4em;text-transform:uppercase;color:#aaa;margin:22px 0}
+.soon .div{display:flex;align-items:center;gap:14px}
+.soon .div i{width:90px;height:1px;background:#bbb8}
+.soon .div svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:1.8}
+.song{cursor:pointer}
+.mystery .cover{background:#241f26;border:1px dashed var(--line)}
+.q{font:600 34px 'Cormorant Garamond',Georgia,serif;color:var(--gold)}
+.mystery .t{color:var(--muted)}
+.mystery .heart,.mystery .del{display:none!important}
+.modal{position:fixed;inset:0;z-index:5;background:#000c;display:grid;place-items:center;padding:20px}
+.sheet{width:100%;max-width:480px;max-height:90vh;overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px;text-align:center}
+.mcover{width:120px;height:120px;margin:0 auto 14px;border-radius:12px;overflow:hidden;background:linear-gradient(135deg,#7a2d3b,#e0707f);display:grid;place-items:center}
+.mcover img{width:100%;height:100%;object-fit:cover}
+.mcover svg{width:48px;height:48px;fill:#fff3;stroke:none}
+.mcover .q{font-size:56px}
+.sheet h2{font:600 30px 'Cormorant Garamond',Georgia,serif;margin:0}
+.sheet h3{font:italic 400 22px 'Cormorant Garamond',Georgia,serif;color:var(--gold);margin:22px 0 10px}
+.sheet p{line-height:1.75;white-space:pre-line;text-align:left;margin:0 0 20px}
+.sheet .row{justify-content:center}
+@media(max-width:640px){nav button{font-size:21px;padding:8px 12px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.3-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.7-8 11-8 11z"/></svg><span>PARA MI<br>MOJARRITA</span></div>
+  <nav role="tablist">
+    <button role="tab" id="t1" aria-selected="true">Canciones</button>
+    <button role="tab" id="t2" aria-selected="false">Flores Amarillas</button>
+  </nav>
+  <button class="pill" id="editToggle" title="Editar" aria-label="Activar modo editar"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.3-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.7-8 11-8 11z"/></svg></button>
+</header>
+
+<main>
+  <section id="songsView">
+    <h1> Canciones  </h1>
+    <div class="grid" id="grid"></div>
+    <p class="empty" id="empty" hidden>Aún no hay canciones. Toca el corazón de arriba y agrega la primera.</p>
+
+    <div class="actions">
+      <a class="btn main" id="spotifyBtn" target="_blank" rel="noopener" hidden>
+        <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm4.6 14.4a.6.6 0 0 1-.9.2c-2.4-1.5-5.400-1.800-8.900-1a.6.6 0 1 1-.3-1.200c3.800-.9 7.100-.5 9.800 1.100.3.200.4.600.3.900zm1.200-2.700a.8.800 0 0 1-1.100.3c-2.700-1.700-6.900-2.200-10.100-1.200a.8.800 0 1 1-.5-1.500c3.700-1.100 8.300-.6 11.400 1.300.4.200.5.700.3 1.100zm.1-2.800C14.700 9 9.400 8.800 6.300 9.800a1 1 0 1 1-.6-1.900c3.500-1.100 9.400-.9 13.100 1.300a1 1 0 0 1-1 1.700z"/></svg>
+        Escuchar playlist
+      </a>
+      <button class="btn ghost" id="linkOpen" hidden>Agregar link de Spotify</button>
+      <div class="panel" id="linkPanel" hidden>
+        <h2>Link de la playlist</h2>
+        <label for="spUrl">Pega aquí el link de Spotify</label>
+        <input id="spUrl" type="url" placeholder="https://open.spotify.com/playlist/...">
+        <div class="row"><button class="btn main" id="linkSave">Guardar link</button><button class="btn ghost" id="linkClear">Quitar link</button></div>
+      </div>
+      <button class="btn ghost" id="addOpen" hidden>Agregar canción</button>
+      <div class="panel" id="addPanel" hidden>
+        <h2>Nueva canción</h2>
+        <label for="fT">Título</label><input id="fT">
+        <label for="fA">Artista</label><input id="fA">
+        <label for="fD">Duración (ej. 3:45)</label><input id="fD" placeholder="3:45">
+        <label for="fI">Link de la portada (opcional)</label><input id="fI" type="url" placeholder="https://...">
+        <label for="fL">Link de la canción en Spotify (opcional)</label><input id="fL" type="url">
+        <label for="fW">Por qué esta canción</label><textarea id="fW" rows="5"></textarea>
+        <div class="row"><button class="btn main" id="addSave">Agregar</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="flowersView" hidden>
+    <div class="soon"><h2>Página en<br>actualización…</h2><p>Vuelve pronto</p><div class="div"><i></i><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.3-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.7-8 11-8 11z"/></svg><i></i></div></div>
+  </section>
+</main>
+<div class="modal" id="modal" hidden><div class="sheet" role="dialog" aria-modal="true" aria-labelledby="mT">
+  <div class="mcover" id="mC"></div>
+  <h2 id="mT"></h2><div class="a" id="mA"></div>
+  <h3 id="mH">Por qué esta canción</h3>
+  <p id="mW"></p>
+  <div class="row"><a class="btn main" id="mL" target="_blank" rel="noopener" hidden>Escucharla en Spotify</a><button class="btn ghost" id="mX">Cerrar</button></div>
+</div></div>
+
+<script>
+// Canciones iniciales: edita esta lista para dejarlas fijas en el código.
+// m:1 = canción sorpresa (muestra "?"). w = el porqué de la canción.
+var DEFAULT_SONGS = [
+  {t:"YOKO", a:"Alvaro Diaz", d:"3:27", i:"yoko.jpg", w:"te dediqué Yoko porque, después de todo, nunca fue un secreto que me tuvieras loco. Fue una de las primeras canciones que te dediqué y, sobre todo, una canción que me representa y que hasta el día de hoy lo sigue haciendo. Cada parte me recuerda a lo que sentía por ti, a las ganas de tenerte a mi lado y a todo lo que alguna vez imaginé contigo. Y al final, cuando dice «no te vayas nunca», recuerdo que una parte de mí esperaba que, por cosas del destino, te quedaras aquí, que de alguna manera la vida nos permitiera seguir coincidiendo. Pero no fue así, y aunque me alegra que estés viviendo nuevas experiencias y persiguiendo tus sueños, no puedo evitar que esa parte de la canción me haga pensar en ti. Porque, aunque hoy estés lejos y las cosas hayan cambiado, Yoko sigue siendo una canción que me recuerda siempre a ti y a todo lo que significaste y sigues significando para mí."},
+  {m:1,t:"?"},{m:1,t:"?"},{m:1,t:"?"},{m:1,t:"?"},{m:1,t:"?"}
+];
+var DEFAULT_PLAYLIST = "https://open.spotify.com/playlist/4ozrzX8PqadgOaGTCBSAco?si=16f0c00867614548&pt=ee1583534f911b00f47ef8cdd07c8ab9"; // Opcional: pega aquí tu link de Spotify para dejarlo fijo.
+
+var HEART = '<svg viewBox="0 0 24 24"><path d="M12 21s-8-5.3-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.7-8 11-8 11z"/></svg>';
+function load(k, f){ try{ var v = localStorage.getItem(k); return v ? JSON.parse(v) : f; }catch(e){ return f; } }
+function save(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+
+var songs = load('mm_songs2', DEFAULT_SONGS);
+var favs = load('mm_favs', {});
+var playlist = DEFAULT_PLAYLIST;
+var $ = function(id){ return document.getElementById(id); };
+
+function esc(s){ var d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
+function isSpotify(u){ return /^https:\/\/(open\.spotify\.com|spotify\.link)\//.test(u); }
+
+function render(){
+  var g = $('grid'); g.innerHTML = '';
+  songs.forEach(function(s,i){
+    var el = document.createElement('div'); el.tabIndex = 0; el.setAttribute('role','button');
+    el.className = 'song';
+    if(s.m) el.className += ' mystery'; el.onclick = function(){ openModal(s); }; el.onkeydown = function(e){ if(e.key==='Enter') openModal(s); };
+    el.innerHTML =
+      '<div class="cover">' + (s.m ? '<b class="q">?</b>' : s.i ? '<img alt="" src="'+esc(s.i)+'">' : HEART.replace('<svg','<svg style="fill:#fff3"')) + '</div>' +
+      '<div class="info"><div class="t">'+esc(s.t)+'</div><div class="a">'+esc(s.a||'')+'</div><div class="d">'+esc(s.d||'')+'</div></div>' +
+      '<button class="heart'+(favs[i]?' on':'')+'" aria-label="Favorita">'+HEART+'</button>' +
+      '<button class="del" aria-label="Quitar canción">×</button>';
+    el.querySelector('.heart').onclick = function(e){ e.preventDefault(); e.stopPropagation(); favs[i]=!favs[i]; save('mm_favs',favs); render(); };
+    el.querySelector('.del').onclick = function(e){ e.preventDefault(); e.stopPropagation(); songs[i]={m:1,t:'?'}; delete favs[i]; save('mm_songs2',songs); save('mm_favs',favs); render(); };
+    g.appendChild(el);
+  });
+  $('empty').hidden = songs.length > 0;
+  var b = $('spotifyBtn');
+  if(playlist && isSpotify(playlist)){ b.href = playlist; b.hidden = false; $('linkOpen').textContent = 'Cambiar link de Spotify'; }
+  else { b.hidden = true; $('linkOpen').textContent = 'Agregar link de Spotify'; }
+}
+
+function openModal(s){
+  $('mT').textContent = s.m ? '?' : s.t;
+  $('mA').textContent = s.m ? '' : (s.a || '');
+  $('mC').innerHTML = s.m ? '<b class="q">?</b>' : (s.i ? '<img alt="" src="'+esc(s.i)+'">' : HEART);
+  $('mH').hidden = !!s.m;
+  $('mW').textContent = s.m ? 'Esta canción todavía es una sorpresa. Pronto vas a saber por qué está aquí.' : (s.w || 'Muy pronto aquí va el porqué de esta canción.');
+  var L = $('mL'); if(!s.m && s.l){ L.href = s.l; L.hidden = false; } else { L.hidden = true; }
+  $('modal').hidden = false; $('mX').focus();
+}
+function closeModal(){ $('modal').hidden = true; }
+$('mX').onclick = closeModal;
+$('modal').onclick = function(e){ if(e.target === this) closeModal(); };
+document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });
+function toggle(id){ $(id).classList.toggle('open'); }
+$('linkOpen').onclick = function(){ $('spUrl').value = playlist || ''; toggle('linkPanel'); };
+$('addOpen').onclick = function(){ toggle('addPanel'); };
+$('linkSave').onclick = function(){
+  var v = $('spUrl').value.trim();
+  if(v && !isSpotify(v)){ alert('Pega un link que empiece con https://open.spotify.com/'); return; }
+  playlist = v; save('mm_playlist', v); $('linkPanel').classList.remove('open'); render();
+};
+$('linkClear').onclick = function(){ playlist=''; save('mm_playlist',''); $('spUrl').value=''; render(); };
+$('addSave').onclick = function(){
+  var t = $('fT').value.trim(); if(!t){ alert('Escribe el título de la canción.'); return; }
+  var l = $('fL').value.trim();
+  var ns={t:t, a:$('fA').value.trim(), d:$('fD').value.trim(), i:$('fI').value.trim(), l: isSpotify(l) ? l : '', w:$('fW').value.trim()};
+  var ix=songs.findIndex(function(x){return x.m;}); if(ix<0) songs.push(ns); else songs[ix]=ns;
+  save('mm_songs2', songs);
+  ['fT','fA','fD','fI','fL','fW'].forEach(function(id){ $(id).value=''; });
+  $('addPanel').classList.remove('open'); render();
+};
+$('editToggle').onclick = function(){ document.body.classList.toggle('edit'); };
+
+function tab(n){
+  $('songsView').hidden = n!==1; $('flowersView').hidden = n!==2;
+  $('t1').setAttribute('aria-selected', n===1); $('t2').setAttribute('aria-selected', n===2);
+}
+$('t1').onclick = function(){ tab(1); }; $('t2').onclick = function(){ tab(2); };
+
+var rain=document.createElement('div'); rain.className='rain'; rain.setAttribute('aria-hidden','true'); document.body.appendChild(rain);
+for(var k=0;k<45;k++){ var h=document.createElement('span'); h.textContent=Math.random()<0.25?'♡':'♥'; h.style.cssText='left:'+Math.random()*100+'%;font-size:'+(6+Math.random()*16)+'px;opacity:'+(0.25+Math.random()*0.6)+';animation-duration:'+(14+Math.random()*16)+'s,'+(3+Math.random()*3)+'s;animation-delay:-'+(Math.random()*30)+'s,-'+(Math.random()*5)+'s;--y:'+(Math.random()*100); rain.appendChild(h); }
+render();
+</script>
+</body>
+</html>
